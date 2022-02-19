@@ -177,7 +177,7 @@ def user_wants_pokemon():
         return
 
 
-# Welcome message
+# Welcome message. ASCII art obtained from https://www.asciiart.eu/video-games/pokemon
 print("\nWelcome!\n")
 print("`;-.          ___,")
 print("  `.`\_...._/`.-\"`")
