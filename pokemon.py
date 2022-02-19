@@ -5,7 +5,7 @@ POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/"
 POKEMON_SPECIES_URL = "https://pokeapi.co/api/v2/species/"
 
 pokemon_dict = {"name": "unknown", "height": "unknown", "types": ["unknown"]}
-pokemon_past_searches = set()
+pokemon_past_searches = {}
 
 pokemon_species_dict = {}
 pokemon_species_past_searches = set()
@@ -13,7 +13,10 @@ pokemon_species_past_searches = set()
 
 
 def get_pokemon(pokemon_name):
-    if pokemon_name in pokemon_dict:
+    global pokemon_dict, pokemon_past_searches
+
+    if pokemon_name in pokemon_past_searches:
+        pokemon_dict["name"] = pokemon_past_searches[pokemon_name]["name"]
         return
     
     try: 
@@ -34,17 +37,20 @@ def get_pokemon(pokemon_name):
         return 0
 
     data_json = data.json()
-    pokemon_past_searches.add(pokemon_name)
+    
 
 
-        
-    pokemon_dict["name"] = data_json["name"]
+    if data_json["name"]:  
+        pokemon_dict["name"] = data_json["name"]
     
     if data_json["height"]:
         pokemon_dict["height"] = data_json["height"]
 
     if data_json["types"]:
         pokemon_dict["types"] = data_json["types"]
+
+    pokemon_past_searches[pokemon_name] = pokemon_dict.copy()
+    
 
 
 
